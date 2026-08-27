@@ -8,6 +8,7 @@ import MembresView from '@/views/MembresView.vue'
 import CotisationsView from '@/views/CotisationsView.vue'
 import HistoriqueView from '@/views/HistoriqueView.vue'
 import ConfigurationView from '@/views/ConfigurationView.vue'
+import NotFoundView from '@/views/NotFoundView.vue' // 1. Import de la vue 404
 
 const routes = [
   {
@@ -56,9 +57,12 @@ const routes = [
     component: ConfigurationView,
     meta: { requiresAuth: true, roles: ['ADMIN'] }
   },
+  // 2. MODIFICATION : Remplacement du redirect par le composant NotFoundView
   {
     path: '/:pathMatch(.*)*',
-    redirect: '/dashboard'
+    name: 'not-found',
+    component: NotFoundView,
+    meta: { public: true } // Permet d'afficher la 404 même aux utilisateurs non connectés
   }
 ]
 

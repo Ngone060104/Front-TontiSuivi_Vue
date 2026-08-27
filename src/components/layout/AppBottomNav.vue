@@ -47,11 +47,11 @@ const bottomMenuItems = computed(() => {
     })
   }
 
-  // 5. Profil / Configuration (Modifié pour ouvrir le menu)
+  // 5. Profil / Configuration
   items.push({
     icon: 'fa-solid fa-user',
     name: 'profil',
-    isProfile: true // Flag pour comportement spécial au clic
+    isProfile: true
   })
 
   return items
@@ -88,7 +88,6 @@ onUnmounted(() => document.removeEventListener('click', closeMenu))
 </script>
 
 <template>
-  <!-- MODIFICATION 1 : La div s'ancre désormais au bas absolu (bottom-0 left-0 right-0) et prend toute la largeur (w-full) -->
   <div class="fixed bottom-0 left-0 right-0 z-50 w-full md:hidden profile-menu-container">
     <div class="relative w-full flex flex-col items-center">
       
@@ -101,7 +100,6 @@ onUnmounted(() => document.removeEventListener('click', closeMenu))
         leave-from-class="transform scale-100 opacity-100 translate-y-0"
         leave-to-class="transform scale-95 opacity-0 translate-y-2"
       >
-        <!-- MODIFICATION 2 : Position basse modifiée à bottom-18 et ajustement de la marge droite (right-4) -->
         <div v-if="showProfileMenu" class="absolute bottom-18 right-4 w-48 bg-white border border-slate-100 rounded-2xl shadow-xl py-1 z-50 flex flex-col font-sans">
           <!-- Option Configuration (uniquement pour l'ADMIN) -->
           <button 
@@ -125,44 +123,42 @@ onUnmounted(() => document.removeEventListener('click', closeMenu))
       </transition>
 
       <!-- Barre de navigation principale native -->
-      <!-- MODIFICATION 3 : Remplacement de rounded-2xl par rounded-t-3xl (arrondi uniquement en haut), suppression des marges (px-4 max-w-sm) et changement de hauteur pour intégrer l'espace de sécurité mobile -->
       <nav class="flex items-center justify-between w-full bg-white border-t border-slate-200/80 rounded-t-3xl shadow-[0_-8px_24px_rgb(0,0,0,0.04)] px-6 pt-1 pb-5 h-16">
         <template v-for="(item, index) in bottomMenuItems" :key="index">
           
-          <!-- Bouton Central "+" -->
+          <!-- Bouton Central "+" Modifié en Vert Émeraude -->
           <button 
             v-if="item.isCentral"
             @click="naviguerVers(item.route)"
-
-            class="flex items-center justify-center w-11 h-11 bg-[#4f46e5] text-white rounded-full shadow-md shadow-indigo-500/20 active:scale-95 transition-transform cursor-pointer -mt-5"
+            class="flex items-center justify-center w-11 h-11 bg-emerald-500 text-white rounded-full shadow-md shadow-emerald-500/20 active:scale-95 transition-transform cursor-pointer -mt-5"
           >
             <i :class="[item.icon, 'text-base']"></i>
           </button>
 
-          <!-- Bouton Spécial Profil -->
+          <!-- Bouton Spécial Profil Modifié en Vert Émeraude -->
           <button 
             v-else-if="item.isProfile"
             @click="handleProfileClick"
             :class="[
               'flex items-center justify-center w-9 h-9 rounded-full transition-all duration-200 relative cursor-pointer',
-              showProfileMenu || isActive('configuration') ? 'bg-indigo-50 text-[#4f46e5]' : 'text-slate-400 hover:text-slate-600'
+              showProfileMenu || isActive('configuration') ? 'bg-emerald-50 text-emerald-600' : 'text-slate-400 hover:text-slate-600'
             ]"
           >
             <i :class="[item.icon, 'text-sm']"></i>
-            <span v-if="isActive('configuration')" class="absolute bottom-1 w-0.5 h-0.5 bg-[#4f46e5] rounded-full"></span>
+            <span v-if="isActive('configuration')" class="absolute bottom-1 w-0.5 h-0.5 bg-emerald-600 rounded-full"></span>
           </button>
 
-          <!-- Boutons de Navigation Standard -->
+          <!-- Boutons de Navigation Standard Modifiés en Vert Émeraude -->
           <button 
             v-else
             @click="naviguerVers(item.route)"
             :class="[
               'flex items-center justify-center w-9 h-9 rounded-full transition-all duration-200 relative cursor-pointer',
-              isActive(item.name) ? 'bg-indigo-50 text-[#4f46e5]' : 'text-slate-400 hover:text-slate-600'
+              isActive(item.name) ? 'bg-emerald-50 text-emerald-600' : 'text-slate-400 hover:text-slate-600'
             ]"
           >
             <i :class="[item.icon, 'text-sm']"></i>
-            <span v-if="isActive(item.name)" class="absolute bottom-1 w-0.5 h-0.5 bg-[#4f46e5] rounded-full"></span>
+            <span v-if="isActive(item.name)" class="absolute bottom-1 w-0.5 h-0.5 bg-emerald-600 rounded-full"></span>
           </button>
 
         </template>
@@ -172,7 +168,6 @@ onUnmounted(() => document.removeEventListener('click', closeMenu))
   </div>
 </template>
 
-<!-- AJOUT : Sécurité CSS pour ajouter automatiquement de la hauteur sur les smartphones récents (encoche du bas) -->
 <style scoped>
 nav {
   padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
