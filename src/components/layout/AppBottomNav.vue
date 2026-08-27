@@ -172,4 +172,5 @@ onUnmounted(() => document.removeEventListener('click', closeMenu))
 nav {
   padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
 }
+
 </style>
