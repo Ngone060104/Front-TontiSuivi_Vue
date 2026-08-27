@@ -4,6 +4,7 @@ import { useRoute } from 'vue-router'
 import { useAuthStore } from '@/stores/auth.js'
 import AppSidebar from '@/components/layout/AppSidebar.vue'
 import AppNavbar from '@/components/layout/AppNavbar.vue'
+import AppBouton from '@/components/layout/AppBottomNav.vue' // 1. Import de la barre mobile
 import ToastContainer from '@/components/ui/ToastContainer.vue'
 import ConfirmDialog from '@/components/ui/ConfirmDialog.vue'
 
@@ -51,9 +52,13 @@ function closeSidebar() {
     <div class="main-container flex-1 flex flex-col min-w-0 overflow-hidden relative">
       <AppNavbar @toggle-sidebar="toggleSidebar" />
 
-      <main class="flex-1 overflow-y-auto p-4 md:p-8 w-full bg-slate-50 space-y-8">
+      <!-- 2. Ajout de pb-28 sur mobile pour laisser la place à la barre flottante -->
+      <main class="flex-1 overflow-y-auto p-4 md:p-8 pb-28 md:pb-8 w-full bg-slate-50 space-y-8">
         <router-view />
       </main>
+
+      <!-- 3. Rendu de la barre de navigation basse uniquement si l'utilisateur est connecté -->
+      <AppBouton />
     </div>
   </div>
 
@@ -61,5 +66,4 @@ function closeSidebar() {
   <div v-else>
     <router-view />
   </div>
-
 </template>

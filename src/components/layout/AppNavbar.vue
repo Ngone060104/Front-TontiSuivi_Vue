@@ -49,8 +49,9 @@ function onGlobalSearch(e) {
 <template>
   <header class="h-20 w-full bg-white border-b border-slate-100 flex items-center justify-between px-4 md:px-8 font-sans">
     <div class="flex items-center gap-4">
+      <!-- CONFIGURATION : Masqué sur smartphone (hidden), visible sur tablette (md:flex), masqué sur PC (lg:hidden) -->
       <button
-        class="lg:hidden flex h-10 w-10 items-center justify-center rounded-xl bg-slate-50 border border-slate-200 text-slate-600 hover:bg-slate-100 transition-colors cursor-pointer"
+        class="hidden md:flex lg:hidden h-10 w-10 items-center justify-center rounded-xl bg-slate-50 border border-slate-200 text-slate-600 hover:bg-slate-100 transition-colors cursor-pointer"
         @click="$emit('toggleSidebar')"
       >
         <i class="fa-solid fa-bars"></i>

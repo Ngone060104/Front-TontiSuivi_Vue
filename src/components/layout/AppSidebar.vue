@@ -7,9 +7,9 @@ const router = useRouter()
 const route = useRoute()
 const auth = useAuthStore()
 
+// 1. Réintégration de l'événement et de la prop pour la gestion d'ouverture sur tablette
 const emit = defineEmits(['close'])
-
-const props = defineProps({
+defineProps({
   show: { type: Boolean, default: false }
 })
 
@@ -42,7 +42,7 @@ function isActive(itemName) {
 
 function naviguerVers(path) {
   router.push(path)
-  emit('close')
+  emit('close') // 2. Ferme le tiroir (drawer) sur tablette après le clic
 }
 
 async function deconnexion() {
@@ -51,6 +51,7 @@ async function deconnexion() {
   router.push('/login')
 }
 
+// 3. Gestion de la touche Échap pour fermer la sidebar sur tablette
 onMounted(() => {
   document.addEventListener('keydown', handleEsc)
 })
@@ -58,19 +59,21 @@ onUnmounted(() => {
   document.removeEventListener('keydown', handleEsc)
 })
 function handleEsc(e) {
-  if (e.key === 'Escape' && props.show) {
+  if (e.key === 'Escape') {
     emit('close')
   }
 }
 </script>
 
 <template>
+  <!-- 4. Overlay d'arrière-plan : actif sur tablette (lg:hidden) si show est vrai -->
   <div
     v-if="show"
     class="fixed inset-0 bg-black/50 z-40 lg:hidden"
     @click="$emit('close')"
   ></div>
 
+  <!-- 5. Classes Tailwind modifiées pour masquer par défaut (hidden), glisser sur tablette (fixed z-50), et s'ancrer sur PC (lg:flex lg:relative) -->
   <aside
     :class="[
       'w-72 min-h-screen bg-[#0f172a] text-white flex flex-col justify-between py-4 pl-4 font-sans border-r border-slate-800 z-50 flex-shrink-0',
@@ -88,6 +91,7 @@ function handleEsc(e) {
             Tonti<span class="text-emerald-500">Suivi</span>
           </h1>
         </div>
+        <!-- 6. Bouton X pour fermer manuellement, affiché uniquement sur tablette -->
         <button
           class="ml-auto lg:hidden flex items-center justify-center w-8 h-8 rounded-lg hover:bg-white/10 transition-colors cursor-pointer"
           @click="$emit('close')"
